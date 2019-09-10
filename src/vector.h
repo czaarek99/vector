@@ -6,18 +6,19 @@
 
 struct vector {
     void*  array;
+    size_t item_size;
     size_t size;
     size_t capacity;
 };
 
 #endif
 
-bool is_empty(struct vector v);
-void* at(size_t index);
-void push(void* item);
-void insert(size_t index, void* item);
-void* pop();
-void* unshift();
-void delete(size_t index);
-struct vector make(size_t length, size_t capacity);
+struct vector* make(size_t item_size, size_t capacity);
+bool is_empty(struct vector* v);
+void* at(struct vector* v, size_t index);
+void push(struct vector* v, void* newItem);
+void insert(struct vector* v, size_t index, void* item);
+void* pop(struct vector* v);
+void* unshift(struct vector* v);
+void delete(struct vector* v, size_t index);
 
