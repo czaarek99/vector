@@ -50,11 +50,54 @@ void insert(struct vector* v, size_t index, void* newItem) {
 
     void* newArray = malloc(v->item_size * v->capacity);
 
-    unsigned long item_offset = newArray + (index * v->item_size);
+    long item_offset = newArray + (index * v->item_size);
 
     memcpy(newArray, v->array, index * v->item_size);
     memcpy(newArray + item_offset, newItem, v->item_size);
-    memcpy(newArray + item_offset + v->item_size, v->array, v->item_size)
+    memcpy(newArray + item_offset + v->item_size, v->array, v->item_size * (v->size - index));
 
+    free(v->array);
+    v->array = newArray;
+    v->size++;
+}
 
+void* pop(struct vector* v) {
+    v->size--;
+
+    void* poppedItem = malloc(v->item_size);
+
+    memcpy(poppedItem, v->array + ((v->size - 1) * v->item_size), v->item_size);
+
+    return poppedItem;
+}
+
+void* shift(struct vector* v) {
+    void* shiftedItem = malloc(v->item_size);
+
+    memcpy(shiftedItem, v->array, v->item_size);
+
+    void* newArray = malloc(v->item_size * v->capacity);
+
+    memcpy(newArray, v->array + v->item_size, v->item_size * (v->size - 1));
+
+    free(v->array);
+
+    v->array = newArray;
+    v->size--;
+
+    return shiftedItem;
+}
+
+void delete(struct vector* v, size_t index) {
+
+    void* newArray = malloc(v->item_size * v->capacity);
+
+    long item_offset = newArray + (index * v->item_size);
+    memcpy(newArray, v->array, index * v->item_size);
+    memcpy(newArray + item_offset + v->item_size, v->array, v->item_size * (v->size - index));
+
+    free(v->array);
+
+    v->array = newArray;
+    v->size--;
 }

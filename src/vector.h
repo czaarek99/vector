@@ -19,6 +19,6 @@ void* at(struct vector* v, size_t index);
 void push(struct vector* v, void* newItem);
 void insert(struct vector* v, size_t index, void* item);
 void* pop(struct vector* v);
-void* unshift(struct vector* v);
+void* shift(struct vector* v);
 void delete(struct vector* v, size_t index);
 
